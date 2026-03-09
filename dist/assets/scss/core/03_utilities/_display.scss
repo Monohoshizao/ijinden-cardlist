@@ -1,0 +1,35 @@
+@use "core/00_settings" as *;
+
+@include mq("tab") {
+	.u-show--pc {
+		display: none;
+	}
+}
+
+@include mq(sp) {
+	.u-show--pc-tab {
+		display: none;
+	}
+}
+
+.u-show--tab {
+	@include mq(pc, min) {
+		display: none;
+	}
+
+	@include mq(sp) {
+		display: none;
+	}
+}
+
+@include mq(pc, min) {
+	.u-show--tab-sp {
+		display: none;
+	}
+}
+
+@include mq(500px, min) {
+	.u-show--sp {
+		display: none;
+	}
+}

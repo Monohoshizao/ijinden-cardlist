@@ -1,0 +1,9 @@
+@use "core/00_settings" as *;
+
+.viewer {
+	padding-block: fcp(30) fcp(50);
+	background-color: #f5e4c4;
+}
+
+@include mq("tab") {
+}

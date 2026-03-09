@@ -1,0 +1,34 @@
+@use "sass:map";
+@use "sass:meta";
+
+$breakpoints: (
+	sp: 500px,
+	tab: 768px,
+	pc: 769px,
+);
+
+@mixin mq($key, $type: max) {
+	$is-map-key: meta.type-of($key) == "string" and map.has-key($breakpoints, $key);
+
+	$breakpoint: null;
+	@if $is-map-key {
+		$breakpoint: map.get($breakpoints, $key);
+	} @else {
+		$breakpoint: $key;
+	}
+
+	@if $breakpoint==null {
+		@error "‘#{$key}’ は定義されていないブレークポイント、または不正な値です";
+	}
+
+	$query: null;
+	@if $type == min {
+		$query: min-width;
+	} @else {
+		$query: max-width;
+	}
+
+	@media screen and (#{$query}: #{$breakpoint}) {
+		@content;
+	}
+}

@@ -1,0 +1,41 @@
+@use "core/00_settings" as *;
+
+.header {
+	position: sticky;
+	top: 0;
+	z-index: 10;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: var(--header-h);
+	padding-inline: fcp(25);
+	background: #211102;
+
+	&__logo {
+		width: fcp(105);
+	}
+
+	&__action {
+		width: fcp(200);
+		padding-block: fcp(13);
+		border: 1px solid #fff;
+		border-radius: 1000px;
+		font-size: fcp(16);
+		color: #fff;
+		font-weight: 600;
+		transition: opacity 0.3s ease;
+	}
+}
+
+@media (hover: hover) {
+	.header__action:hover {
+		opacity: 0.6;
+	}
+}
+
+.header__action:focus-visible {
+	opacity: 0.6;
+}
+
+@include mq("tab") {
+}

@@ -1,0 +1,11 @@
+@use "core/00_settings" as *;
+
+.l-container {
+	width: 90%;
+	max-width: 1000px;
+	margin-inline: auto;
+
+	@include mq("tab") {
+		max-width: 500px;
+	}
+}

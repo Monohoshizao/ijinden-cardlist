@@ -1,0 +1,55 @@
+@use "core/00_settings" as *;
+
+.pagination {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: fcp(10);
+
+	&__button {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		height: fcp(40);
+		aspect-ratio: 1/1;
+		border: 1px solid #211102;
+		font-size: fcp(18);
+		color: #211102;
+		font-weight: 700;
+		transition: opacity 0.3s ease;
+	}
+
+	&__button.is-current {
+		background-color: #211102;
+		color: #fff;
+		cursor: auto;
+	}
+
+	&__button--prev,
+	&__button--next {
+		width: auto;
+		height: fcp(40);
+		aspect-ratio: 2.5/1;
+	}
+
+	&__total {
+		margin-top: fcp(16);
+		font-size: fcp(16);
+		color: #808080;
+		font-weight: 500;
+		text-align: center;
+	}
+}
+
+@media (hover: hover) {
+	.pagination__button:not(.is-current):hover {
+		opacity: 0.6;
+	}
+}
+
+.pagination__button:not(.is-current):focus-visible {
+	opacity: 0.6;
+}
+
+@include mq("tab") {
+}

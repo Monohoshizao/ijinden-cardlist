@@ -1,0 +1,151 @@
+@use "core/00_settings" as *;
+
+.cards {
+	display: grid;
+	gap: fcp(20);
+	margin-bottom: fcp(50);
+}
+
+.cards--detail {
+	grid-template-columns: 1fr;
+}
+
+.cards--image {
+	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+}
+
+.card {
+	position: relative;
+	box-shadow: var(--shadow);
+	cursor: pointer;
+}
+
+.card__check {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	margin-left: auto;
+}
+
+.card__check-input {
+	inline-size: fcp(18);
+	aspect-ratio: 1/1;
+	border-radius: calc(var(--radius) / 4);
+	appearance: auto;
+}
+
+.cards--detail .card {
+	display: grid;
+	grid-template-columns: 15% 1fr;
+	align-items: start;
+	gap: fcp(16);
+	padding: fcp(16);
+	border-radius: var(--radius);
+	background: #fff;
+
+	&__body {
+		display: grid;
+		gap: fcp(10);
+	}
+
+	&__heading {
+		display: flex;
+		align-items: baseline;
+		justify-content: flex-start;
+		gap: fcp(10);
+		padding-bottom: fcp(8);
+		border-bottom: 1px solid #211102;
+	}
+
+	&__id {
+		font-size: fcp(16);
+		font-weight: 500;
+	}
+
+	&__ttl {
+		font-size: fcp(22);
+		font-weight: 700;
+	}
+
+	&__meta {
+		display: flex;
+		align-items: center;
+		justify-content: flex-start;
+		flex-wrap: wrap;
+		gap: fcp(8);
+	}
+
+	&__chip {
+		z-index: 5;
+		padding: fcp(4) fcp(8);
+		border: 1px solid #211102;
+		border-radius: 1000px;
+		background-color: #fff;
+		font-size: fcp(14);
+		color: #211102;
+		font-weight: 500;
+	}
+
+	&__chip--red {
+		border-color: #c62828;
+		color: #c62828;
+	}
+
+	&__chip--blue {
+		border-color: #1565c0;
+		color: #1565c0;
+	}
+
+	&__chip--green {
+		border-color: #2e7d32;
+		color: #2e7d32;
+	}
+
+	&__chip--yellow {
+		border-color: #f9a825;
+		color: #8d6e00;
+	}
+
+	&__chip--purple {
+		border-color: #6a1b9a;
+		color: #6a1b9a;
+	}
+
+	&__characteristic,
+	&__txt,
+	&__trash {
+		font-size: fcp(16);
+		font-weight: 500;
+	}
+
+	&__txt {
+		line-height: 1.8;
+	}
+
+	&__characteristic span,
+	&__trash span {
+		font-weight: 700;
+	}
+}
+
+.cards--image .card {
+	border-radius: calc(var(--radius) / 2);
+
+	&__body {
+		display: none;
+	}
+}
+
+.empty-state {
+	padding-block: fcp(40);
+	border-radius: var(--radius);
+	background: #fff;
+	text-align: center;
+
+	&.is-hidden {
+		display: none !important;
+	}
+}
+
+@include mq("tab") {
+}

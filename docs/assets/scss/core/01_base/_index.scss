@@ -1,0 +1,112 @@
+@use "core/00_settings" as *;
+
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
+html {
+	scroll-behavior: smooth;
+}
+
+ul,
+ol {
+	list-style: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span,
+a,
+button,
+strong,
+small,
+li,
+table,
+th,
+td,
+dt,
+dd,
+label,
+input,
+textarea,
+select,
+legend,
+address,
+data,
+time,
+figcaption {
+	font-family: "Noto Sans JP", sans-serif;
+	color: $color-text-main;
+	font-weight: 400;
+	font-style: normal;
+	letter-spacing: 0.05em;
+	line-height: 1;
+}
+
+strong,
+label,
+small,
+address,
+time,
+figcaption {
+	display: block;
+}
+
+strong {
+	font-weight: 700;
+}
+
+a {
+	display: block;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+fieldset {
+	display: contents;
+	border: none;
+}
+
+input,
+select {
+	display: block;
+	border: 1px solid #000;
+	border-radius: 0;
+	background-color: transparent;
+	color: #000;
+	appearance: none;
+}
+
+input[type="submit"],
+input[type="checkbox"],
+input[type="radio"],
+select {
+	cursor: pointer;
+}
+
+button {
+	display: block;
+	border: none;
+	background-color: transparent;
+	cursor: pointer;
+}
+
+picture,
+img,
+svg,
+video {
+	display: block;
+	width: 100%;
+	height: auto;
+}
+
+iframe {
+	display: block;
+}

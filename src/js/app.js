@@ -61,6 +61,8 @@ const state = {
 
 let allCards = [];
 const selectedCardIds = new Set();
+let scrollToPageTopFrame = null;
+let previousScrollBehaviorForPageTop = null;
 
 boot();
 
@@ -184,6 +186,7 @@ function bindEvents() {
 		if (!Number.isFinite(nextPage) || nextPage === state.currentPage) return;
 		state.currentPage = nextPage;
 		updateView();
+		scrollToPageTopFast();
 	});
 }
 
@@ -360,6 +363,45 @@ function toggleCardSelection(card, checked) {
 		selectedCardIds.delete(card.id);
 	}
 	updateView();
+}
+
+function scrollToPageTopFast() {
+	const startY = window.scrollY || window.pageYOffset || 0;
+	if (startY <= 0) return;
+
+	if (scrollToPageTopFrame !== null) {
+		cancelAnimationFrame(scrollToPageTopFrame);
+	}
+
+	const duration = 120;
+	const startTime = performance.now();
+	const html = document.documentElement;
+
+	if (previousScrollBehaviorForPageTop === null) {
+		previousScrollBehaviorForPageTop = html.style.scrollBehavior;
+	}
+	html.style.scrollBehavior = "auto";
+
+	const animate = (currentTime) => {
+		const progress = Math.min((currentTime - startTime) / duration, 1);
+		const easedProgress = 1 - (1 - progress) ** 3;
+		const nextY = Math.round(startY * (1 - easedProgress));
+
+		window.scrollTo(0, nextY);
+
+		if (progress < 1) {
+			scrollToPageTopFrame = requestAnimationFrame(animate);
+			return;
+		}
+
+		scrollToPageTopFrame = null;
+		requestAnimationFrame(() => {
+			html.style.scrollBehavior = previousScrollBehaviorForPageTop;
+			previousScrollBehaviorForPageTop = null;
+		});
+	};
+
+	scrollToPageTopFrame = requestAnimationFrame(animate);
 }
 
 function lockSearchModalBackground() {

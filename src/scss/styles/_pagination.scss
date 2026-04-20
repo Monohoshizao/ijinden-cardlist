@@ -1,4 +1,4 @@
-@use "core/00_settings" as *;
+@use "core/00_settings"as *;
 
 .pagination {
 	display: flex;
@@ -52,4 +52,24 @@
 }
 
 @include mq("tab") {
+	.pagination {
+		gap: fcs(7);
+
+		&__button {
+			height: fcs(30);
+			font-size: fcs(16);
+		}
+
+		&__button--prev,
+		&__button--next {
+			height: fcs(30);
+			aspect-ratio: 2.3/1;
+			font-size: fcs(14);
+		}
+
+		&__total {
+			margin-top: fcs(14);
+			font-size: fcs(14);
+		}
+	}
 }

@@ -1,4 +1,4 @@
-@use "core/00_settings" as *;
+@use "core/00_settings"as *;
 
 .viewer {
 	padding-block: fcp(30) fcp(50);
@@ -6,4 +6,7 @@
 }
 
 @include mq("tab") {
+	.viewer {
+		padding-block: fcs(23) fcs(37);
+	}
 }

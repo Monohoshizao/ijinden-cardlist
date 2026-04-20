@@ -1,4 +1,4 @@
-@use "core/00_settings" as *;
+@use "core/00_settings"as *;
 
 .viewer__controls {
 	display: grid;
@@ -23,8 +23,8 @@
 .info-panel__counts {
 	display: flex;
 	align-items: center;
-	gap: fcp(16);
 	flex-wrap: wrap;
+	gap: fcp(16);
 }
 
 .info-panel__txt {
@@ -123,7 +123,7 @@
 .filter-form__range-fields {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
-	gap: fcp(8);
+	gap: fcp(16);
 }
 
 .filter-form__field--check {
@@ -144,7 +144,7 @@
 .view-switch {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
-	gap: fcp(8);
+	gap: fcp(16);
 }
 
 .view-switch__btn {
@@ -206,4 +206,96 @@
 }
 
 @include mq("tab") {
+	.viewer__controls {
+		gap: fcs(12);
+		margin-bottom: fcs(37);
+	}
+
+	.viewer__controls-body {
+		gap: fcs(12);
+	}
+
+	.info-panel__status {
+		gap: fcs(10);
+		margin-bottom: fcs(12);
+	}
+
+	.info-panel__counts {
+		gap: fcs(8);
+	}
+
+	.info-panel__txt {
+		font-size: fcs(14);
+
+		strong {
+			font-size: fcs(18);
+		}
+	}
+
+	.viewer__controls-reset {
+		padding: fcs(6) fcs(10);
+		font-size: fcs(12);
+	}
+
+	.viewer__controls .filter-form__field {
+		max-height: fcs(120);
+	}
+
+	.info-panel {
+		padding: fcs(15) fcs(12);
+	}
+
+	.filter-form__field {
+		gap: fcs(6);
+
+		&:not(:last-child) {
+			margin-bottom: fcs(12);
+		}
+	}
+
+	.filter-form__label {
+		font-size: fcs(12);
+	}
+
+	.filter-form__wrap {
+		&::before {
+			right: fcs(6);
+			border-top: fcs(5) solid #211102;
+			border-left: fcs(3) solid transparent;
+			border-right: fcs(3) solid transparent;
+		}
+	}
+
+	.filter-form__field input,
+	.filter-form__field select {
+		padding: fcs(10);
+		font-size: fcs(12);
+	}
+
+	.filter-form__range-fields {
+		gap: fcs(12);
+	}
+
+	.filter-form__field--check {
+		gap: fcs(12);
+	}
+
+	.filter-form__field--check input {
+		width: fcs(16);
+	}
+
+	.view-switch {
+		gap: fcs(12);
+	}
+
+	.view-switch__btn {
+		padding: fcs(10);
+		font-size: fcs(12);
+	}
+
+	.viewer__controls-toggle {
+		margin-top: fcs(6);
+		padding: fcs(15) fcs(12);
+		font-size: fcs(14);
+	}
 }

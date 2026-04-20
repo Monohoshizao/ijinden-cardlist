@@ -1,4 +1,4 @@
-@use "core/00_settings" as *;
+@use "core/00_settings"as *;
 
 .cards {
 	display: grid;
@@ -116,9 +116,6 @@
 	&__trash {
 		font-size: fcp(16);
 		font-weight: 500;
-	}
-
-	&__txt {
 		line-height: 1.8;
 	}
 
@@ -148,4 +145,68 @@
 }
 
 @include mq("tab") {
+	.cards {
+		gap: fcs(15);
+		margin-bottom: fcs(37);
+	}
+
+	.cards--image {
+		grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+	}
+
+	.card__check {
+		position: absolute;
+		top: fcs(12);
+		right: fcs(12);
+	}
+
+	.card__check-input {
+		inline-size: fcs(16);
+	}
+
+	.cards--detail .card {
+		position: relative;
+		grid-template-columns: 20% 1fr;
+		gap: fcs(12);
+		padding: fcs(12);
+
+		&__body {
+			gap: fcs(7);
+		}
+
+		&__heading {
+			display: grid;
+			gap: fcs(7);
+			padding-bottom: fcs(6);
+		}
+
+		&__id {
+			font-size: fcs(12);
+		}
+
+		&__ttl {
+			font-size: fcs(17);
+			font-weight: 700;
+			line-height: 1.3;
+		}
+
+		&__meta {
+			gap: fcs(6);
+		}
+
+		&__chip {
+			padding: fcs(3) fcs(6);
+			font-size: fcs(12);
+		}
+
+		&__characteristic,
+		&__txt,
+		&__trash {
+			font-size: fcs(14);
+		}
+	}
+
+	.empty-state {
+		padding-block: fcs(30);
+	}
 }

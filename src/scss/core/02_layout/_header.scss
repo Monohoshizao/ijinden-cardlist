@@ -1,4 +1,4 @@
-@use "core/00_settings" as *;
+@use "core/00_settings"as *;
 
 .header {
 	position: sticky;
@@ -38,4 +38,17 @@
 }
 
 @include mq("tab") {
+	.header {
+		padding-inline: fcs(20);
+
+		&__logo {
+			width: fcs(80);
+		}
+
+		&__action {
+			width: fcs(150);
+			padding-block: fcs(10);
+			font-size: fcs(14);
+		}
+	}
 }

@@ -1,4 +1,4 @@
-@use "core/00_settings" as *;
+@use "core/00_settings"as *;
 
 .card-modal {
 	position: relative;
@@ -58,7 +58,7 @@
 	}
 
 	.card__id {
-		font-size: fcp(18);
+		font-size: fcp(16);
 		font-weight: 500;
 	}
 
@@ -108,20 +108,14 @@
 		}
 	}
 
-	.card__txt {
-		line-height: 1.8;
-	}
-
 	.card__characteristic,
 	.card__txt,
 	.card__trash {
 		font-size: fcp(16);
 		font-weight: 500;
-	}
-
-	.card__txt {
 		line-height: 1.8;
 	}
+
 
 	.card__characteristic span,
 	.card__trash span {
@@ -140,4 +134,64 @@
 }
 
 @include mq("tab") {
+	.card-modal {
+		height: calc(100dvh - #{fcs(30)});
+		padding: fcs(37) fcs(15) fcs(15);
+	}
+
+	.card-modal__close {
+		top: fcs(7);
+		right: fcs(7);
+		z-index: 1;
+		width: fcs(27);
+		font-size: fcs(18);
+	}
+
+	.card-modal__content {
+		display: block;
+		height: 100%;
+		overflow-y: auto;
+		overscroll-behavior: contain;
+	}
+
+	.card-modal__img {
+		width: 65%;
+		margin-bottom: fcs(16);
+		margin-inline: auto;
+	}
+
+	.card-modal__body {
+		gap: fcs(15);
+		padding-top: 0;
+
+		.card__heading {
+			display: grid;
+			gap: fcs(7);
+			padding-bottom: fcs(10);
+		}
+
+		.card__id {
+			font-size: fcs(14);
+		}
+
+		.card__ttl {
+			font-size: fcs(17);
+			line-height: 1.3;
+		}
+
+		.card__meta {
+			gap: fcs(10);
+		}
+
+		.card__chip {
+			padding: fcs(5) fcs(10);
+			font-size: fcs(12);
+		}
+
+		.card__characteristic,
+		.card__txt,
+		.card__trash {
+			font-size: fcs(14);
+		}
+	}
 }

@@ -26,13 +26,13 @@ const paths = {
 	images: "src/images/**/*.{jpg,jpeg,png,svg,gif,webp}",
 	videos: "src/videos/**/*.{mp4,mov,webm,avi}",
 	data: "src/data/**/*",
-	dist: "dist",
-	distSCSS: "dist/assets/scss",
-	distCSS: "dist/assets/css",
-	distJS: "dist/assets/js",
-	distIMG: "dist/assets/images",
-	distVIDEO: "dist/assets/videos",
-	distData: "dist/assets/data",
+	docs: "docs",
+	docsSCSS: "docs/assets/scss",
+	docsCSS: "docs/assets/css",
+	docsJS: "docs/assets/js",
+	docsIMG: "docs/assets/images",
+	docsVIDEO: "docs/assets/videos",
+	docsData: "docs/assets/data",
 };
 
 // 共通ユーティリティ
@@ -43,9 +43,9 @@ function onErr(taskName) {
 	};
 }
 
-// dist全削除（ビルド時のみ）
+// docs全削除（ビルド時のみ）
 function clean() {
-	return deleteAsync([paths.dist]);
+	return deleteAsync([paths.docs]);
 }
 
 // Nunjucks → HTML
@@ -81,7 +81,7 @@ function nunjucks() {
 				envOptions: { noCache: true, trimBlocks: true, lstripBlocks: true },
 			}),
 		)
-		.pipe(gulp.dest(paths.dist))
+		.pipe(gulp.dest(paths.docs))
 		.pipe(browserSync.stream());
 }
 
@@ -90,7 +90,7 @@ function html() {
 	return gulp
 		.src(paths.staticHtml, { base: "src/html" })
 		.pipe(plumber({ errorHandler: onErr("html") }))
-		.pipe(gulp.dest(paths.dist))
+		.pipe(gulp.dest(paths.docs))
 		.pipe(browserSync.stream());
 }
 
@@ -103,14 +103,14 @@ function styles() {
 		.pipe(sass().on("error", sass.logError))
 		.pipe(postcss([autoprefixer()]))
 		.pipe(sourcemaps.write("."))
-		.pipe(gulp.dest(paths.distCSS))
+		.pipe(gulp.dest(paths.docsCSS))
 		.pipe(browserSync.stream());
 }
 
 // SCSSコピー
 function copySass() {
-	return deleteAsync([paths.distSCSS]).then(() => {
-		return gulp.src("src/scss/**/*.scss", { base: "src/scss" }).pipe(gulp.dest(paths.distSCSS));
+	return deleteAsync([paths.docsSCSS]).then(() => {
+		return gulp.src("src/scss/**/*.scss", { base: "src/scss" }).pipe(gulp.dest(paths.docsSCSS));
 	});
 }
 
@@ -122,7 +122,7 @@ function scripts() {
 		.pipe(sourcemaps.init())
 		.pipe(terser())
 		.pipe(sourcemaps.write("."))
-		.pipe(gulp.dest(paths.distJS))
+		.pipe(gulp.dest(paths.docsJS))
 		.pipe(browserSync.stream());
 }
 
@@ -134,7 +134,7 @@ async function images() {
 
 	return gulp
 		.src(paths.images, { encoding: false })
-		.pipe(newer(paths.distIMG))
+		.pipe(newer(paths.docsIMG))
 		.pipe(
 			imagemin([
 				mozjpeg({ quality: 75, progressive: true }),
@@ -147,7 +147,7 @@ async function images() {
 				}),
 			]),
 		)
-		.pipe(gulp.dest(paths.distIMG));
+		.pipe(gulp.dest(paths.docsIMG));
 }
 
 // 動画最適化
@@ -162,7 +162,7 @@ function videos() {
 					return;
 				}
 
-				const outDir = path.resolve(paths.distVIDEO);
+				const outDir = path.resolve(paths.docsVIDEO);
 				const base = path.basename(file.path).replace(/\.(mp4|mov|avi|webm)$/i, ".mp4");
 				const outPath = path.join(outDir, base);
 
@@ -191,39 +191,39 @@ function copyData() {
 	return gulp
 		.src(paths.data, { base: "src/data", allowEmpty: true })
 		.pipe(plumber({ errorHandler: onErr("copyData") }))
-		.pipe(newer(paths.distData))
-		.pipe(gulp.dest(paths.distData));
+		.pipe(newer(paths.docsData))
+		.pipe(gulp.dest(paths.docsData));
 }
 
-// unlink時に/distの該当ファイルだけ削除
-function deleteDistFile(filePath, srcBase, distBase) {
+// unlink時に/docsの該当ファイルだけ削除
+function deletedocsFile(filePath, srcBase, docsBase) {
 	const rel = path.relative(path.resolve(srcBase), filePath);
-	const distPath = path.resolve(distBase, rel);
-	deleteAsync(distPath).then(() => console.log(`[unlink] deleted: ${distPath}`));
+	const docsPath = path.resolve(docsBase, rel);
+	deleteAsync(docsPath).then(() => console.log(`[unlink] deleted: ${docsPath}`));
 }
 
-// 画像用：unlink時に/distの該当ファイルだけ削除
-function deleteDistImageFile(filePath) {
+// 画像用：unlink時に/docsの該当ファイルだけ削除
+function deletedocsImageFile(filePath) {
 	const srcBase = path.resolve("src/images");
 	const rel = path.relative(srcBase, filePath);
-	const distPath = path.resolve(paths.distIMG, rel);
+	const docsPath = path.resolve(paths.docsIMG, rel);
 
-	fs.unlink(distPath, (err) => {
+	fs.unlink(docsPath, (err) => {
 		if (err) {
 			if (err.code === "ENOENT") {
-				console.log("[images unlink] not found (already deleted):", distPath);
+				console.log("[images unlink] not found (already deleted):", docsPath);
 			} else {
 				console.error("[images unlink] fs.unlink error:", err.message);
 			}
 		} else {
-			console.log("[images unlink] deleted by fs.unlink:", distPath);
+			console.log("[images unlink] deleted by fs.unlink:", docsPath);
 		}
 	});
 }
 
 // SCSS unlink処理
 function copyOneSass(filePath) {
-	return gulp.src(filePath, { base: "src/scss" }).pipe(gulp.dest(paths.distSCSS));
+	return gulp.src(filePath, { base: "src/scss" }).pipe(gulp.dest(paths.docsSCSS));
 }
 
 function watchSass() {
@@ -239,9 +239,9 @@ function watchSass() {
 	watcher.on("change", handleAddOrChange);
 
 	watcher.on("unlink", (filePath) => {
-		deleteDistFile(filePath, "src/scss", paths.distSCSS);
+		deletedocsFile(filePath, "src/scss", paths.docsSCSS);
 
-		const cssPath = filePath.replace(/src[\/\\]scss/, paths.distCSS).replace(/\.scss$/, ".css");
+		const cssPath = filePath.replace(/src[\/\\]scss/, paths.docsCSS).replace(/\.scss$/, ".css");
 		const mapPath = cssPath + ".map";
 
 		deleteAsync(cssPath);
@@ -259,9 +259,9 @@ function watchJs() {
 	watcher.on("add", scripts);
 
 	watcher.on("unlink", (filePath) => {
-		deleteDistFile(filePath, "src/js", paths.distJS);
+		deletedocsFile(filePath, "src/js", paths.docsJS);
 
-		deleteAsync(filePath.replace(/src[\/\\]js/, paths.distJS).replace(/\.js$/, ".js.map"));
+		deleteAsync(filePath.replace(/src[\/\\]js/, paths.docsJS).replace(/\.js$/, ".js.map"));
 	});
 }
 
@@ -274,7 +274,7 @@ function watchImages() {
 
 	watcher.on("unlink", (filePath) => {
 		console.log("[images unlink] src:", filePath);
-		deleteDistImageFile(filePath);
+		deletedocsImageFile(filePath);
 	});
 }
 
@@ -291,10 +291,10 @@ function watchVideos() {
 		const dir = path.dirname(rel);
 		const baseName = path.basename(rel, path.extname(rel));
 
-		const distPath = path.resolve(paths.distVIDEO, dir, baseName + ".mp4");
+		const docsPath = path.resolve(paths.docsVIDEO, dir, baseName + ".mp4");
 
-		deleteAsync(distPath).then(() => {
-			console.log("[videos unlink] deleted:", distPath);
+		deleteAsync(docsPath).then(() => {
+			console.log("[videos unlink] deleted:", docsPath);
 		});
 	});
 }
@@ -306,7 +306,7 @@ function watchData() {
 	watcher.on("add", copyData);
 	watcher.on("change", copyData);
 	watcher.on("unlink", (filePath) => {
-		deleteDistFile(filePath, "src/data", paths.distData);
+		deletedocsFile(filePath, "src/data", paths.docsData);
 	});
 }
 
@@ -324,11 +324,11 @@ function watchFiles() {
 
 // ローカル専用サーバー
 function serveLocal(done) {
-	const distAbs = path.resolve(paths.dist);
+	const docsAbs = path.resolve(paths.docs);
 
 	browserSync.init(
 		{
-			server: { baseDir: distAbs, index: "index.html" },
+			server: { baseDir: docsAbs, index: "index.html" },
 			notify: false,
 		},
 		(err) => {
@@ -341,11 +341,11 @@ function serveLocal(done) {
 
 // 外部デバイス確認用サーバー
 function serveExternal(done) {
-	const distAbs = path.resolve(paths.dist);
+	const docsAbs = path.resolve(paths.docs);
 
 	browserSync.init(
 		{
-			server: { baseDir: distAbs, index: "index.html" },
+			server: { baseDir: docsAbs, index: "index.html" },
 			host: "0.0.0.0",
 			online: true,
 			port: 3000,
